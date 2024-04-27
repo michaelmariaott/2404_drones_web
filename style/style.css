@@ -20,12 +20,21 @@ h2, em {
     max-width: 540px;
 }
 
-#rnbo-clickable-keyboard {
+/* #rnbo-clickable-keyboard {
     display: flex;
     flex-wrap: wrap;
+} */
+
+#rnbo-clickable-keyboard {
+    background: linear-gradient(215deg, hsl(0, 0%, 25%), hsl(0, 0%, 15%), hsl(0, 0%, 5%));
+    border-radius: .33em .33em .75em .75em;
+    color: #FFF;
+    font-family: 'Russo One', sans-serif;
+    inline-size: max-content;
+    padding: .5em 1em 1em 1em;
 }
 
-#rnbo-clickable-keyboard > div {
+/* #rnbo-clickable-keyboard > div {
     margin: 2px;
     border: solid black 1px;
     min-height: 50px;
@@ -33,12 +42,12 @@ h2, em {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
-#rnbo-clickable-keyboard > div.clicked {
+/* #rnbo-clickable-keyboard > div.clicked {
     background: #222222;
     color: #dddddd;
-}
+} */
 
 #rnbo-parameter-sliders {
     display: flex;
@@ -52,3 +61,41 @@ h2, em {
 #rnbo-parameter-sliders > div > input:first-of-type {
     flex-grow: 1;
 }
+
+.kb {
+    block-size: var(--_bs, 8em);
+    display: grid;
+    grid-column-gap: 1px;
+    grid-template-columns: repeat(var(--_r, 156), 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    inline-size: max-content;
+}
+
+.kb [aria-label] {
+    --_focus-bxsh: inset 0 0 50px #fff, inset 20px 0 80px hsl(var(--_h,0), 70%, 35%), inset -20px 0 80px hsl(var(--_h,0), 100%, 50%);
+    --_hover-bg: linear-gradient(to bottom, #FFF 0%, hsl(0, 0%, 90%) 100%);
+    background-color: var(--_bgc, #FFF);
+    border: 0;
+    border-radius: 0 0 3px 3px;
+    grid-column: var(--gcs) / span var(--_csp, 3);
+    grid-row: 1 / span var(--_rsp, 5);
+  }
+
+  .kb [aria-label*="#"] { 
+    --_bgc: #000;
+    --_csp: 2;
+    --_focus-bxsh: inset 0 0 50px hsl(var(--_h,0), 25%, 35%), inset 20px 0 80px hsl(var(--_h,0), 70%, 35%), inset -20px 0 80px hsl(var(--_h,0), 100%, 50%);
+    --_hover-bg: linear-gradient(to top, #000 0%, hsl(0, 0%, 25%) 100%);
+    --_rsp: 3;
+    position: relative;
+  }
+  .kb [aria-label]:hover { background: var(--_hover-bg); }
+  .kb [aria-label]:focus-visible { box-shadow: var(--_focus-bxsh); outline: none; }
+  .synth {
+    background: linear-gradient(215deg, hsl(0, 0%, 25%), hsl(0, 0%, 15%), hsl(0, 0%, 5%));
+    border-radius: .33em .33em .75em .75em;
+    color: #FFF;
+    font-family: 'Russo One', sans-serif;
+    inline-size: max-content;
+    padding: .5em 1em 1em 1em;
+  }

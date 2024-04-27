@@ -292,24 +292,68 @@ function makeMIDIKeyboard(device) {
     mdiv.removeChild(document.getElementById("no-midi-label"));
 
     const midiNotes = [49, 52, 56, 63];
-    midiNotes.forEach(note => {
-        const key = document.createElement("div");
-        const label = document.createElement("p");
-        label.textContent = note;
-        key.appendChild(label);
+    const notes = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
+    const getMIDI = (N = 0) => {
+        // return MIDI Numbers relative to A440 = 48;
+        return 48 + N;
+    }
+    const getKeys = (start, end) => {
+        let black = 0,
+          white = -2;
+        return Array(end - start)
+          .fill()
+          .map((_, i) => {
+            const key = (start + i) % 12;
+            const note = notes[key < 0 ? 12 + key : key];
+            const octave = Math.ceil(4 + (start + i) / 12);
+            if (i === 0 && note === "C") black = -3;
+            note.includes("#")
+              ? ((black += 3), ["C#", "F#"].includes(note) 
+              && (black += 3))
+              : (white += 3);
+      
+            return {
+              note,
+              midi: getMIDI(start + i),
+              octave: note === "B" || note === "A#" 
+              ? octave - 1 : octave,
+              offset: note.includes("#") ? black : white,
+            };
+          });
+      };
+
+    const keys = getKeys(-48, 40);
+    
+    const kb88 = document.createElement("div");
+    kb88.id = "kb88";
+    kb88.className = "kb";
+    mdiv.appendChild(kb88);
+    keys.forEach(item => {
+        const key = document.createElement("button");
+        // key.innerHTML = `${item.note}${item.octave}`;
+        key.ariaLabel = `${item.note}${item.octave}`;
+        key.dataset.note = `${item.note}${item.octave}`;
+        key.dataset.midi = item.midi;
+        key.style = `--gcs:${item.offset}`;
+        key.type = "button>";
+
+        // const key = document.createElement("div");
+        // const label = document.createElement("p");
+        // label.textContent = note;
+        // key.appendChild(label);
         key.addEventListener("pointerdown", () => {
             let midiChannel = 0;
 
             // Format a MIDI message paylaod, this constructs a MIDI on event
             let noteOnMessage = [
                 144 + midiChannel, // Code for a note on: 10010000 & midi channel (0-15)
-                note, // MIDI Note
+                key.dataset.midi, // MIDI Note
                 100 // MIDI Velocity
             ];
         
             let noteOffMessage = [
                 128 + midiChannel, // Code for a note off: 10000000 & midi channel (0-15)
-                note, // MIDI Note
+                key.dataset.midi, // MIDI Note
                 0 // MIDI Velocity
             ];
         
@@ -332,8 +376,9 @@ function makeMIDIKeyboard(device) {
 
         key.addEventListener("pointerup", () => key.classList.remove("clicked"));
 
-        mdiv.appendChild(key);
+        kb88.appendChild(key);
     });
 }
 
 setup();
+
