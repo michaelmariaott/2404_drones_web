@@ -391,6 +391,27 @@ function makeMIDIKeyboard(device) {
 
         kb88.appendChild(key);
     });
+
+    const allOff = document.createElement("button");
+    allOff.innerHTML = "All Off!";
+    allOff.addEventListener("pointerdown", () => {
+        let clicked_keys = document.getElementById("kb88").getElementsByClassName("clicked");
+        let midiChannel = 0;
+        while (clicked_keys.length > 0) {
+            let noteOffMessage = [
+                128 + midiChannel, // Code for a note off: 10000000 & midi channel (0-15)
+                clicked_keys[0].dataset.midi, // MIDI Note
+                0 // MIDI Velocity
+            ];
+            let midiPort = 0;
+            let noteOffEvent = new RNBO.MIDIEvent(device.context.currentTime * 1000, midiPort, noteOffMessage);
+            device.scheduleEvent(noteOffEvent);
+            clicked_keys[0].classList.remove("clicked");
+
+            clicked_keys = document.getElementById("kb88").getElementsByClassName("clicked");
+        };
+    });
+    mdiv.appendChild(allOff);
 }
 
 setup();
