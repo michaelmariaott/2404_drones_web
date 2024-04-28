@@ -323,6 +323,7 @@ function makeMIDIKeyboard(device) {
       };
 
     const keys = getKeys(-48, 40);
+    // const keys = getKeys(-21, 28);
     
     const kb88 = document.createElement("div");
     kb88.id = "kb88";
