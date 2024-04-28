@@ -45,8 +45,7 @@ h2, em {
 } */
 
 /* #rnbo-clickable-keyboard > div.clicked {
-    background: #222222;
-    color: #dddddd;
+    background: var(--_hover-bg);
 } */
 
 #rnbo-parameter-sliders {
@@ -74,28 +73,27 @@ h2, em {
 .kb [aria-label] {
     --_focus-bxsh: inset 0 0 50px #fff, inset 20px 0 80px hsl(var(--_h,0), 70%, 35%), inset -20px 0 80px hsl(var(--_h,0), 100%, 50%);
     --_hover-bg: linear-gradient(to bottom, #FFF 0%, hsl(0, 0%, 90%) 100%);
+    --_clicked-bg: linear-gradient(to bottom, #FFF 0%, hsl(0, 0%, 40%) 100%);
     background-color: var(--_bgc, #FFF);
     border: 0;
     border-radius: 0 0 3px 3px;
     grid-column: var(--gcs) / span var(--_csp, 3);
     grid-row: 1 / span var(--_rsp, 5);
-  }
+}
 
-  .kb [aria-label*="#"] { 
-    --_bgc: #000;
-    --_csp: 2;
-    --_focus-bxsh: inset 0 0 50px hsl(var(--_h,0), 25%, 35%), inset 20px 0 80px hsl(var(--_h,0), 70%, 35%), inset -20px 0 80px hsl(var(--_h,0), 100%, 50%);
-    --_hover-bg: linear-gradient(to top, #000 0%, hsl(0, 0%, 25%) 100%);
-    --_rsp: 3;
-    position: relative;
-  }
-  .kb [aria-label]:hover { background: var(--_hover-bg); }
-  .kb [aria-label]:focus-visible { box-shadow: var(--_focus-bxsh); outline: none; }
-  .synth {
-    background: linear-gradient(215deg, hsl(0, 0%, 25%), hsl(0, 0%, 15%), hsl(0, 0%, 5%));
-    border-radius: .33em .33em .75em .75em;
-    color: #FFF;
-    font-family: 'Russo One', sans-serif;
-    inline-size: max-content;
-    padding: .5em 1em 1em 1em;
-  }
+.kb [aria-label].clicked {
+background: var(--_clicked-bg);
+}
+
+.kb [aria-label*="#"] { 
+--_bgc: #000;
+--_csp: 2;
+--_focus-bxsh: inset 0 0 50px hsl(var(--_h,0), 25%, 35%), inset 20px 0 80px hsl(var(--_h,0), 70%, 35%), inset -20px 0 80px hsl(var(--_h,0), 100%, 50%);
+--_hover-bg: linear-gradient(to top, #000 0%, hsl(0, 0%, 25%) 100%);
+--_clicked-bg: linear-gradient(to top, #000 0%, hsl(0, 0%, 50%) 100%);
+--_rsp: 3;
+position: relative;
+}
+.kb [aria-label]:hover { background: var(--_hover-bg); }
+.kb [aria-label].clicked:hover { background: var(--_clicked-bg); }
+.kb [aria-label]:focus-visible { box-shadow: var(--_focus-bxsh); outline: none; }
