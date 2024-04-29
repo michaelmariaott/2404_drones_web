@@ -144,7 +144,7 @@ function makeSliders(device) {
         label.setAttribute("name", param.name);
         label.setAttribute("for", param.name);
         label.setAttribute("class", "param-label");
-        label.textContent = `${param.name}: `;
+        label.textContent = `${param.id}: `;
 
         // Make each slider reflect its parameter
         slider.setAttribute("type", "range");
