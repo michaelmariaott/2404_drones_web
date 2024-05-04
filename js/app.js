@@ -295,7 +295,7 @@ function makeMIDIKeyboard(device) {
     const notes = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
     const getMIDI = (N = 0) => {
         // return MIDI Numbers relative to A440 = 48;
-        return 48 + N;
+        return 69 + N;
     }
     const getKeys = (start, end) => {
         let black = 0,
@@ -364,7 +364,7 @@ function makeMIDIKeyboard(device) {
                     key.dataset.midi, // MIDI Note
                     100 // MIDI Velocity
                 ];
-            
+                console.log(noteOnMessage);
                 // let noteOffMessage = [
                 //     128 + midiChannel, // Code for a note off: 10000000 & midi channel (0-15)
                 //     key.dataset.midi, // MIDI Note
