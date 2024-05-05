@@ -364,7 +364,6 @@ function makeMIDIKeyboard(device) {
                     key.dataset.midi, // MIDI Note
                     100 // MIDI Velocity
                 ];
-                console.log(noteOnMessage);
                 // let noteOffMessage = [
                 //     128 + midiChannel, // Code for a note off: 10000000 & midi channel (0-15)
                 //     key.dataset.midi, // MIDI Note
@@ -413,6 +412,38 @@ function makeMIDIKeyboard(device) {
         };
     });
     mdiv.appendChild(allOff);
+
+
+
+    const retrigger = document.createElement("button");
+    retrigger.innerHTML = "Retrigger Notes!";
+    retrigger.addEventListener("pointerdown", () => {
+        let keys = document.getElementById("kb88").getElementsByClassName("clicked");
+        const midiChannel = 0;
+        const midiPort = 0;
+        let i = 0;
+        while (keys[i] !== undefined ) {
+            let noteOffMessage = [
+                128 + midiChannel, // Code for a note off: 10000000 & midi channel (0-15)
+                keys[i].dataset.midi, // MIDI Note
+                0 // MIDI Velocity
+            ];
+            let noteOffEvent = new RNBO.MIDIEvent(device.context.currentTime * 1000, midiPort, noteOffMessage);
+            device.scheduleEvent(noteOffEvent);
+
+            let noteOnMessage = [
+                144 + midiChannel, // Code for a note on: 10010000 & midi channel (0-15)
+                keys[i].dataset.midi, // MIDI Note
+                100 // MIDI Velocity
+            ];
+            let noteOnEvent = new RNBO.MIDIEvent(device.context.currentTime * 1000, midiPort, noteOnMessage);
+            device.scheduleEvent(noteOnEvent);
+            
+            i += 1;
+        }
+
+    });
+    mdiv.appendChild(retrigger);
 }
 
 setup();
